@@ -3,7 +3,6 @@ schema_version: 1
 context:
   name: apistar
   version: 0.7.2
-  RECIPE_DIR: ${{ env.get("RECIPE_DIR", default=".") }}
 
 package:
   name: ${{ name|lower }}
@@ -21,6 +20,9 @@ build:
   number: 1
   noarch: python
   script: python -m pip install --no-deps --ignore-installed -vv .
+  python:
+    entry_points:
+      - apistar = apistar.cli:cli
 
 requirements:
   host:
@@ -40,10 +42,12 @@ tests:
       imports:
         - apistar
       python_version: ${{ python_min }}.*
+  - script:
+      - apistar --help
 
 about:
   license: BSD-3-Clause
-  license_file: ${{ RECIPE_DIR }}/LICENSE.md
+  license_file: LICENSE.md
   summary: API documentation, validation, mocking, and clients.
   homepage: https://github.com/encode/apistar
   repository: https://github.com/encode/apistar

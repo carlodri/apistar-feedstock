@@ -1,18 +1,5 @@
-From 29e0e09fa503f155673a64d12c5839592d4caf9a Mon Sep 17 00:00:00 2001
-From: Amin Alaee <mohammadamin.alaee@gmail.com>
-Date: Fri, 17 Sep 2021 18:10:04 +0430
-Subject: [PATCH 1/2] upgrade to typesystem 0.3.0 (modded to 0.4.1 - last -)
-
----
- apistar/schemas/jsonschema.py | 2 +-
- apistar/schemas/openapi.py    | 4 ++--
- apistar/schemas/swagger.py    | 4 ++--
- requirements.txt              | 2 +-
- setup.py                      | 2 +-
- 5 files changed, 7 insertions(+), 7 deletions(-)
-
 diff --git a/apistar/schemas/jsonschema.py b/apistar/schemas/jsonschema.py
-index d649f2cc..9d62eb17 100644
+index d649f2c..9d62eb1 100644
 --- a/apistar/schemas/jsonschema.py
 +++ b/apistar/schemas/jsonschema.py
 @@ -1,6 +1,6 @@
@@ -24,10 +11,10 @@ index d649f2cc..9d62eb17 100644
  JSON_SCHEMA = (
      typesystem.Object(
 diff --git a/apistar/schemas/openapi.py b/apistar/schemas/openapi.py
-index b8742699..a894c77b 100644
+index b874269..a894c77 100644
 --- a/apistar/schemas/openapi.py
 +++ b/apistar/schemas/openapi.py
-@@ -15,7 +15,7 @@
+@@ -15,7 +15,7 @@ RESPONSE_REF = typesystem.Object(
      properties={"$ref": typesystem.String(pattern="^#/components/responses/")}
  )
  
@@ -36,7 +23,7 @@ index b8742699..a894c77b 100644
  
  OPEN_API = typesystem.Object(
      title="OpenAPI",
-@@ -367,7 +367,7 @@ def load(self, data):
+@@ -367,7 +367,7 @@ class OpenAPI:
          )
  
      def get_schema_definitions(self, data):
@@ -46,10 +33,10 @@ index b8742699..a894c77b 100644
          for key, value in schemas.items():
              ref = f"#/components/schemas/{key}"
 diff --git a/apistar/schemas/swagger.py b/apistar/schemas/swagger.py
-index b8bd10ab..74c21daf 100644
+index b8bd10a..74c21da 100644
 --- a/apistar/schemas/swagger.py
 +++ b/apistar/schemas/swagger.py
-@@ -12,7 +12,7 @@
+@@ -12,7 +12,7 @@ RESPONSE_REF = typesystem.Object(
      properties={"$ref": typesystem.String(pattern="^#/responses/")}
  )
  
@@ -58,7 +45,7 @@ index b8bd10ab..74c21daf 100644
  
  SWAGGER = typesystem.Object(
      title="Swagger",
-@@ -357,7 +357,7 @@ def load(self, data):
+@@ -357,7 +357,7 @@ class Swagger:
          )
  
      def get_schema_definitions(self, data):
@@ -67,52 +54,32 @@ index b8bd10ab..74c21daf 100644
          schemas = lookup(data, ["components", "schemas"], {})
          for key, value in schemas.items():
              ref = f"#/components/schemas/{key}"
-diff --git a/requirements.txt b/requirements.txt
-index cf3a4712..56fb385a 100644
---- a/requirements.txt
-+++ b/requirements.txt
-@@ -3,7 +3,7 @@ click
- jinja2
- requests
- pyyaml
--typesystem>=0.2.0
-+typesystem=0.4.1
- 
- # Testing requirements
- black
 diff --git a/setup.py b/setup.py
-index 282b8136..1b822c7b 100755
+index 282b813..e169440 100755
 --- a/setup.py
 +++ b/setup.py
-@@ -69,7 +69,7 @@ def get_long_description(long_description_file):
+@@ -61,7 +61,7 @@ setup(
+     name="apistar",
+     version=version,
+     url="https://docs.apistar.com/",
+-    license="BSD",
++    license="BSD-3-Clause",
+     description="API documentation, validation, mocking, and clients.",
+     long_description=get_long_description("README.md"),
+     long_description_content_type="text/markdown",
+@@ -69,13 +69,13 @@ setup(
      author_email="tom@tomchristie.com",
      packages=get_packages("apistar"),
      package_data=get_package_data("apistar"),
 -    install_requires=["click", "jinja2", "requests", "pyyaml", "typesystem"],
-+    install_requires=["click", "jinja2", "requests", "pyyaml", "typesystem>=0.3.0,<0.4.0"],
++    install_requires=["click", "jinja2", "requests", "pyyaml", "typesystem~=0.4"],
      python_requires=">=3.6",
      classifiers=[
          "Development Status :: 3 - Alpha",
-
-From 7effcf229e8770054f20b28b1c3f8abbe420acc4 Mon Sep 17 00:00:00 2001
-From: Amin Alaee <mohammadamin.alaee@gmail.com>
-Date: Fri, 24 Sep 2021 12:01:21 +0330
-Subject: [PATCH 2/2] Update setup.py
-
----
- setup.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/setup.py b/setup.py
-index 1b822c7b..71bdbe16 100755
---- a/setup.py
-+++ b/setup.py
-@@ -69,7 +69,7 @@ def get_long_description(long_description_file):
-     author_email="tom@tomchristie.com",
-     packages=get_packages("apistar"),
-     package_data=get_package_data("apistar"),
--    install_requires=["click", "jinja2", "requests", "pyyaml", "typesystem>=0.3.0,<0.4.0"],
-+    install_requires=["click", "jinja2", "requests", "pyyaml", "typesystem~=0.3"],
-     python_requires=">=3.6",
-     classifiers=[
-         "Development Status :: 3 - Alpha",
+         "Environment :: Web Environment",
+         "Intended Audience :: Developers",
+-        "License :: OSI Approved :: BSD License",
++        "License :: OSI Approved :: BSD-3-Clause",
+         "Operating System :: OS Independent",
+         "Topic :: Internet :: WWW/HTTP",
+         "Programming Language :: Python :: 3",
