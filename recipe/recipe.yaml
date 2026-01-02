@@ -36,6 +36,7 @@ requirements:
     - pyyaml
     - requests
     - typesystem =0.4.1
+    - legacy-cgi
 
 tests:
   - python:
